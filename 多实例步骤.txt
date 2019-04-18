@@ -1,0 +1,8 @@
+1、安装MySQL，二进制方式是最优化的安装，如果没有定制的话。
+2、建立多实例的相关目录，并授权。
+3、初始化实例
+    mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3306/data --user=mysql
+    mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3307/data --user=mysql
+4、启动实例
+    mysqld-safe --default-file=/data/3306/my.cn 2>&1 >/dev/null &
+    mysqld-safe --default-file=/data/3307/my.cn 2>&1 >/dev/null &
