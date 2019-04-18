@@ -6,3 +6,8 @@
 4、启动实例
     mysqld-safe --default-file=/data/3306/my.cn 2>&1 >/dev/null &
     mysqld-safe --default-file=/data/3307/my.cn 2>&1 >/dev/null &
+5、修改实例密码
+    mysqladmin -uroot -S /data/3307/mysql.sock password 'linshizhang'
+6、连接实例
+    mysql -uroot -plinshizhang -S /data/3307/mysql.sock
+    输入密码：
