@@ -1,0 +1,56 @@
+#!/bin/sh
+# This scripts is create by Tony lin.
+# Site: https://blog.tengyaods.cn:8888
+
+#init
+port=3307
+mysql_user="root"
+mysql_pwd="linshizhang"
+CmdPath="/usr/local/mysql/bin"
+mysql_sock="/data/${port}/mysql.sock"
+
+# startup funciton
+function_start_mysql(){
+    if [ ! -e "$mysql_sock" ];
+    then
+        echo  "Starting MySQL. . . \n"
+        /bin/sh ${CmdPath}/mysqld_safe --defaults-file=/data/${port}/my.cnf 2>&1 > /dev/null &
+    else
+        echo "MySQL is running . . . \n"
+        exit
+    fi
+}
+
+# stop function
+function_stop_mysql(){
+    if [ ! -e "$mysql_sock" ];
+    then
+        echo "MySQL is not running!\n"
+        exit
+    else
+        echo "Stopping MySQL . . .\n"
+        ${CmdPath}/mysqladmin -S /data/${port}/mysql.sock shutdown
+    fi
+}
+
+# restart function
+function_restart_mysql() {
+    echo "Restarting MySQL . . .\n"
+    function_stop_mysql
+    sleep 2
+    function_start_mysql
+}
+
+case $1 in
+    start)
+        function_start_mysql
+        ;;
+    stop)
+        function_stop_mysql
+        ;;
+    restart)
+        function_restart_mysql
+        ;;
+    *)
+        echo "USAGE: /data/${port}/mysql {start|stop|restart}\n"
+esac
